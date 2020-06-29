@@ -8,7 +8,10 @@ const ConfirmGameStart = props => {
     		<View style={styles.view}>
     			<Text style={styles.title}>This is your chosen number: {props.number}</Text>
     			<View style={styles.button}>
-    				<Button color={Colors.darkGreen} title="Start the Game"/>
+    				<Button
+    				    color={Colors.darkGreen}
+    				    title="Start the Game"
+    				    onPress={props.confirmStartGame}/>
     			</View>
     		</View>
     	);
