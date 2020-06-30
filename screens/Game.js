@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import Card from '../components/Card';
 
@@ -15,9 +15,18 @@ const generateRandomBetween = (min, max, exclude) => {
 
 const Game = props => {
 	const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, props.userNumber));
+	const [rounds, setRounds] = useState(0);
 
 	const currentMin = useRef(1);
 	const currentMax = useRef(100);
+
+	const {userNumber, onGameOver} = props;
+
+	useEffect(() => {
+		if(currentGuess === userNumber) {
+			onGameOver(rounds);
+		}
+	}, [currentGuess, userNumber, onGameOver]);
 
 	const nextGuessHandler = direction => {
 		if (
@@ -39,6 +48,7 @@ const Game = props => {
 		}
 		const nextNumber = generateRandomBetween(currentMin.current, currentMax.current, currentGuess);
 		setCurrentGuess(nextNumber);
+		setRounds(currentRounds => currentRounds + 1);
 	};
 
 	return(
